@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { map } from '../../../../utils/utils';
 
 export const Line = styled.div`
   border-radius: 4px;
@@ -12,13 +11,6 @@ export const Line = styled.div`
 export const Wrapper = styled.div`
   z-index: 2;
 
-  transition-duration: ${(props) => props.transitionDuration}ms;
-
-  transform: ${(props) => `scale(${props.progress})`};
-  .burger-wrapper-line {
-    transition-duration: ${(props) => props.transitionDuration}ms;
-    transform: ${(props) => `rotateZ(${map(props.progress, 1, 0, 0, 90)}deg)`};
-  }
   position: fixed;
   left: 30px;
   top: 30px;

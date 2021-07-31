@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import * as S from './App.styled';
 import BackgroundCircles from './pages/components/atoms/BackgroundCircles/index';
 import BurgerMenu from './pages/components/atoms/BurgerMenu';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Swipe from 'react-easy-swipe';
 import { useSwipe } from './hooks/useSwipe';
 import { map } from './utils/utils';
@@ -32,8 +32,8 @@ function App() {
     size: SIZE,
     transitionMs: TRANSITION_MS,
     areaFromAllowed: SIZE * 1.1,
-    fromLeftToRightBorder: SIZE * 0.4,
-    fromRightToLeftBorder: SIZE * 0.4,
+    fromLeftToRightBorder: SIZE * 0.3,
+    fromRightToLeftBorder: SIZE * 0.3,
   });
 
   const opacity = useMemo(
@@ -49,7 +49,7 @@ function App() {
         backgroundColor: 'rgba(255,255,255,0.3)',
       }}
     >
-      <OpacityContext.Provider value={{ opacity }}>
+      <OpacityContext.Provider value={{ opacity: opacity }}>
         <Swipe
           style={{ height: '100%' }}
           onSwipeStart={onSwipeStart}
@@ -61,6 +61,10 @@ function App() {
             size={SIZE}
             transition={transition}
             progress={progress}
+            style={{
+              transitionDuration: `${transition}ms`,
+              transform: `translate3d(${progress}px, 0px, 0px)`,
+            }}
           />
           <S.GlobalStyles />
           <BackgroundCircles transitionMs={transition} opacity={opacity} />
@@ -74,7 +78,7 @@ function App() {
           <Router>
             <Switch>
               <Route>
-                <Home />
+                <Home d={progress} />
               </Route>
             </Switch>
           </Router>

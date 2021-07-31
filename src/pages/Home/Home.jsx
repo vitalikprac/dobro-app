@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { OpacityContext } from '../../context/OpacityContext';
 
-const Home = () => {
+const Home = ({ d }) => {
   const { opacity } = useContext(OpacityContext);
   return (
     <div
@@ -17,9 +17,9 @@ const Home = () => {
         opacity,
       }}
     >
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
+      <div>{d}</div>
+      <div>X</div>
+      <div>X</div>
     </div>
   );
 };

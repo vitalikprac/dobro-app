@@ -17,7 +17,7 @@ export const useSwipe = ({
 
   const menuRef = useRef(null);
 
-  const [transition, setTransition] = useState(0);
+  const transitionRef = useRef(0);
 
   const openMenu = useCallback(() => {
     setMenuState((prev) => {
@@ -53,13 +53,13 @@ export const useSwipe = ({
       if (!allowChangeMenu) {
         return;
       }
-      setTransition(0);
+      transitionRef.current = 0;
       setProgress(position.x);
     },
     [allowChangeMenu],
   );
 
-  const normalProgress = useMemo(() => {
+  const getNormalProgress = () => {
     if (menuStatus === MENU_LEFT) {
       let value = progress - SIZE;
       if (value > 0) {
@@ -80,14 +80,16 @@ export const useSwipe = ({
       return value;
     }
     return progress;
-  }, [SIZE, menuStatus, progress]);
+  };
+
+  const normalProgress = getNormalProgress();
 
   const onSwipeEnd = useCallback(
     (event) => {
       if (!allowChangeMenu) {
         return;
       }
-      setTransition(TRANSITION_MS);
+      transitionRef.current = TRANSITION_MS;
       const clientX = event.changedTouches?.[0]?.clientX;
 
       if (menuStatus === MENU_LEFT) {
@@ -133,7 +135,7 @@ export const useSwipe = ({
     openMenu,
     progress: normalProgress,
     menuRef,
-    transition,
+    transition: transitionRef.current,
     normalizedProgress,
   };
 };
