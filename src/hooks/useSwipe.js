@@ -1,13 +1,14 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { no } from 'tailwindcss/lib/cli/emoji';
 
-export const useSwipe = (SIZE) => {
+export const useSwipe = ({
+  size: SIZE,
+  transitionMs: TRANSITION_MS,
+  areaFromAllowed: AREA_FROM_ALLOWED,
+  fromLeftToRightBorder: FROM_LEFT_TO_RIGHT_BORDER,
+  fromRightToLeftBorder: FROM_RIGHT_TO_LEFT_BORDER,
+}) => {
   const MENU_LEFT = 1;
   const MENU_RIGHT = 2;
-  const FROM_LEFT_TO_RIGHT_BORDER = SIZE * 0.4;
-  const FROM_RIGHT_TO_LEFT_BORDER = SIZE * 0.4;
-  const AREA_FROM_ALLOWED = SIZE * 0.9;
-  const TRANSITION_MS = 300;
 
   const [progress, setProgress] = useState(-SIZE);
   const [menuStatus, setMenuState] = useState(MENU_LEFT);
@@ -111,6 +112,7 @@ export const useSwipe = (SIZE) => {
       FROM_LEFT_TO_RIGHT_BORDER,
       FROM_RIGHT_TO_LEFT_BORDER,
       SIZE,
+      TRANSITION_MS,
       allowChangeMenu,
       menuStatus,
       normalProgress,

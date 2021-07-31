@@ -24,7 +24,13 @@ function App() {
     menuRef,
     openMenu,
     transition,
-  } = useSwipe(SIZE);
+  } = useSwipe({
+    size: SIZE,
+    transitionMs: 300,
+    areaFromAllowed: SIZE * 0.9,
+    fromLeftToRightBorder: SIZE * 0.4,
+    fromRightToLeftBorder: SIZE * 0.4,
+  });
 
   const burgerProgress = map(progress, -200, 0, 1, 0);
 
@@ -42,26 +48,18 @@ function App() {
         onSwipeEnd={onSwipeEnd}
         onSwipeMove={onSwipeMove}
       >
-        <div
+        <S.Menu
           ref={menuRef}
-          style={{
-            zIndex: 2,
-            position: 'relative',
-            height: '100%',
-            width: `${SIZE}px`,
-            transitionDuration: `${transition}ms`,
-            transform: `translate(${progress}px)`,
-            backgroundColor: 'red',
-          }}
+          size={SIZE}
+          transition={transition}
+          progress={progress}
         />
         <S.GlobalStyles />
         <BackgroundCircles />
         <BurgerMenu
           progress={burgerProgress}
           transitionDuration={transition}
-          onClick={() => {
-            openMenu();
-          }}
+          onClick={openMenu}
           ref={menuButton}
         />
 
