@@ -8,6 +8,7 @@ import BackgroundCircles from './pages/components/atoms/BackgroundCircles/index'
 import BurgerMenu from './pages/components/atoms/BurgerMenu';
 import { useMemo, useRef, useState } from 'react';
 import Swipe from 'react-easy-swipe';
+import { map } from './pages/components/atoms/BurgerMenu/BurgerMenu.styled';
 
 const MENU_LEFT = 1;
 const MENU_RIGHT = 2;
@@ -25,7 +26,18 @@ function App() {
   const menuRef = useRef(null);
 
   const [transition, setTransition] = useState(0);
-  const openMenu = () => {};
+  const openMenu = () => {
+    setMenuState((prev) => {
+      if (prev === MENU_LEFT) {
+        setProgress(SIZE);
+        return MENU_RIGHT;
+      }
+      if (prev === MENU_RIGHT) {
+        setProgress(0);
+        return MENU_LEFT;
+      }
+    });
+  };
 
   const onSwipeStart = (event) => {
     const clientX = event.changedTouches?.[0]?.clientX;
@@ -53,6 +65,9 @@ function App() {
       let value = progress - SIZE;
       if (value > 0) {
         value = 0;
+      }
+      if (value < -SIZE) {
+        value = -SIZE;
       }
       return value;
     } else if (menuStatus === MENU_RIGHT) {
@@ -95,6 +110,8 @@ function App() {
     }
   };
 
+  const burgerProgress = map(normalProgress, -200, 0, 1, 0);
+
   return (
     <div
       className="App"
@@ -124,7 +141,8 @@ function App() {
         <S.GlobalStyles />
         <BackgroundCircles />
         <BurgerMenu
-          progress={1}
+          progress={burgerProgress}
+          transitionDuration={transition}
           onClick={() => {
             openMenu();
           }}
