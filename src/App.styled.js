@@ -1,6 +1,10 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+  
+  html,body,#root{
+    
+  }
   body{
     margin: 0;
     padding: 0;

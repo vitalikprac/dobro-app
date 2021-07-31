@@ -6,12 +6,11 @@ import Home from './pages/Home';
 import * as S from './App.styled';
 import BackgroundCircles from './pages/components/atoms/BackgroundCircles/index';
 import BurgerMenu from './pages/components/atoms/BurgerMenu';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import Swipe from 'react-easy-swipe';
 import { useSwipe } from './hooks/useSwipe';
 import { map } from './utils/utils';
 import { OpacityContext } from './context/OpacityContext';
-
 const SIZE = 200;
 const TRANSITION_MS = 300;
 const MIN_OPACITY = 0.5;
@@ -27,6 +26,7 @@ function App() {
     menuRef,
     openMenu,
     transition,
+    allowRefresh,
     normalizedProgress,
   } = useSwipe({
     size: SIZE,
@@ -55,6 +55,7 @@ function App() {
           onSwipeStart={onSwipeStart}
           onSwipeEnd={onSwipeEnd}
           onSwipeMove={onSwipeMove}
+          tolerance={500}
         >
           <S.Menu
             ref={menuRef}
@@ -66,7 +67,7 @@ function App() {
               transform: `translate3d(${progress}px, 0px, 0px)`,
             }}
           />
-          <S.GlobalStyles />
+          <S.GlobalStyles allowRefresh={allowRefresh} />
           <BackgroundCircles transitionMs={transition} opacity={opacity} />
           <BurgerMenu
             progress={normalizedProgress}
@@ -78,7 +79,7 @@ function App() {
           <Router>
             <Switch>
               <Route>
-                <Home d={progress} />
+                <Home d={allowRefresh.toString()} />
               </Route>
             </Switch>
           </Router>

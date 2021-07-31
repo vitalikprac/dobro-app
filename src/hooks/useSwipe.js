@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { map } from '../utils/utils';
 
 export const useSwipe = ({
@@ -14,7 +14,6 @@ export const useSwipe = ({
   const [progress, setProgress] = useState(-SIZE);
   const [menuStatus, setMenuState] = useState(MENU_LEFT);
   const [allowChangeMenu, setAllowChangeMenu] = useState(true);
-
   const menuRef = useRef(null);
 
   const transitionRef = useRef(0);
@@ -51,10 +50,11 @@ export const useSwipe = ({
   const onSwipeMove = useCallback(
     (position) => {
       if (!allowChangeMenu) {
-        return;
+        return false;
       }
       transitionRef.current = 0;
       setProgress(position.x);
+      return true;
     },
     [allowChangeMenu],
   );
@@ -128,11 +128,14 @@ export const useSwipe = ({
     [SIZE, normalProgress],
   );
 
+  const allowRefresh = normalProgress === -SIZE || normalizedProgress === 0;
+
   return {
     onSwipeStart,
     onSwipeEnd,
     onSwipeMove,
     openMenu,
+    allowRefresh,
     progress: normalProgress,
     menuRef,
     transition: transitionRef.current,
