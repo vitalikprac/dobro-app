@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-
-export const map = function (n, start1, stop1, start2, stop2) {
-  return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
-};
+import { map } from '../../../../utils/utils';
 
 export const Line = styled.div`
   border-radius: 4px;
@@ -13,7 +10,7 @@ export const Line = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  z-index: 0;
+  z-index: 2;
 
   transition-duration: ${(props) => props.transitionDuration}ms;
 

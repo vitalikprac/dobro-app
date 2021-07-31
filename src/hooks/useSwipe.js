@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { map } from '../utils/utils';
 
 export const useSwipe = ({
   size: SIZE,
@@ -120,6 +121,11 @@ export const useSwipe = ({
     ],
   );
 
+  const normalizedProgress = useMemo(
+    () => map(normalProgress, -SIZE, 0, 1, 0),
+    [SIZE, normalProgress],
+  );
+
   return {
     onSwipeStart,
     onSwipeEnd,
@@ -128,5 +134,6 @@ export const useSwipe = ({
     progress: normalProgress,
     menuRef,
     transition,
+    normalizedProgress,
   };
 };

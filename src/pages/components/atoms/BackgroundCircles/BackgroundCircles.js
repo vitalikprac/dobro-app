@@ -2,9 +2,14 @@ import React from 'react';
 import * as S from './BackgroundCircles.styled';
 import LogoImg from '../../../../imgs/Logo.png';
 
-const BackgroundCircles = () => {
+const BackgroundCircles = ({ opacity, transitionMs }) => {
   return (
-    <div>
+    <div
+      style={{
+        opacity,
+        transition: `${transitionMs}ms`,
+      }}
+    >
       <S.Logo
         style={{
           top: '-70px',

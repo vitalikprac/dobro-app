@@ -8,12 +8,17 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const Menu = styled.div`
-  z-index: 2;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  z-index: 3;
   position: relative;
   height: 100%;
   width: ${(props) => props.size}px;
   transition-duration: ${(props) => props.transition}ms;
-  transform: translate(${(props) => props.progress}px);
+  transform: translateX(${(props) => props.progress}px);
   background-color: red;
   display: flex;
   justify-content: center;
