@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { VARIABLES } from '../../../../styles/variables';
 
 export const Line = styled.div`
   border-radius: 4px;
-  background-color: rgb(163, 205, 204);
+  background-color: ${VARIABLES['primary']};
   height: 15%;
   width: 7vw;
   margin-top: ${(props) => (props.first ? 0 : '0.3rem')};

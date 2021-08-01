@@ -11,6 +11,8 @@ import Swipe from 'react-easy-swipe';
 import { useSwipe } from './hooks/useSwipe';
 import { map } from './utils/utils';
 import { OpacityContext } from './context/OpacityContext';
+import { useDebounce } from './hooks/useDebounce';
+
 const SIZE = 200;
 const TRANSITION_MS = 300;
 const MIN_OPACITY = 0.5;
@@ -40,6 +42,8 @@ function App() {
     () => map(normalizedProgress, 1, 0, 1, MIN_OPACITY),
     [normalizedProgress],
   );
+
+  const isMenuActive = useDebounce(progress !== -SIZE, 50);
 
   return (
     <div
@@ -75,11 +79,33 @@ function App() {
             onClick={openMenu}
             ref={menuButton}
           />
+          {isMenuActive && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                height: '100%',
+                width: '100%',
+                zIndex: 2,
+              }}
+            >
+              <div
+                style={{
+                  zIndex: 2,
+                  pointerEvents: 'none',
+                  position: 'relative',
+                  height: '100%',
+                  width: '100%',
+                  backgroundColor: `rgba(0, 0, 0, ${1 - opacity}`,
+                }}
+              />
+            </div>
+          )}
 
           <Router>
             <Switch>
               <Route>
-                <Home d={allowRefresh.toString()} />
+                <Home />
               </Route>
             </Switch>
           </Router>
